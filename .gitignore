@@ -9,6 +9,7 @@ CMakeFiles/
 *.out
 *.exe
 poo_tp_2627
+/main
 
 # Ficheiros pessoais do CLion
 .idea/workspace.xml

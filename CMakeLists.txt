@@ -10,4 +10,5 @@ add_compile_options(-Wall -Wextra -pedantic)
 add_executable(poo_tp_2627
         main.cpp
         Settings.h
+        Settings.cpp
 )

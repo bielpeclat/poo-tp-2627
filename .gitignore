@@ -1,0 +1,25 @@
+# Builds do CLion / CMake
+cmake-build-*/
+build/
+CMakeCache.txt
+CMakeFiles/
+
+# Executaveis e objetos (o executavel nao vai no zip de entrega)
+*.o
+*.out
+*.exe
+poo_tp_2627
+
+# Ficheiros pessoais do CLion
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/shelf/
+.idea/dictionaries/
+
+# Zips de entrega
+*.zip
+
+# Sistema
+.DS_Store
+Thumbs.db

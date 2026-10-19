@@ -6,8 +6,8 @@ Trabalho prático de Programação Orientada a Objetos (DEIS/ISEC).
 
 | Nome | Número |
 |------|--------|
-| _nome1_ | _numero1_ |
-| _nome2_ | _numero2_ |
+| _Filipe Fadigas_ | _numero1_ |
+| _Gabriel Costa_ | _2025140643_ |
 
 ## Entregas
 

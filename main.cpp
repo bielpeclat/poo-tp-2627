@@ -8,4 +8,4 @@ int main() {
     
     return 0;
 }
-// teste de commit pelo vs code no PC
+// commit feito pelo portatil, 67

@@ -6,6 +6,7 @@ int main() {
 
     teste();
     printf("boas boas boas boas");
+    // ola
     
     return 0;
 }

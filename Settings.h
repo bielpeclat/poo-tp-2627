@@ -17,8 +17,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-void teste();
-
 class Settings {
 public:
     // ----- Ecrã (buffer interno da classe Ecra) -----

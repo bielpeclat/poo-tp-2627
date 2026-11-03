@@ -10,4 +10,4 @@ int main() {
     
     return 0;
 }
-// commit feito pelo portatil, 67
+// comecando terca a noite

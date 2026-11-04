@@ -6,16 +6,9 @@
 int main() {
     std::cout << "Simulador de fabrica em Marte" << std::endl;
 
-    Ecra e1(3, 4);
+    Ecra e1(15, 15);
     e1.limpa();
-    e1.mostra();
-    aguardaEnter();
-    e1.posiciona(0, 0);
-    e1.escreve('G');
-    e1.mostra();
-    aguardaEnter();
-    e1.posiciona(2, 3);
-    e1.escreve('G');
+    e1.moldura(1, 1, 5, 5);
     e1.mostra();
 
     return 0;

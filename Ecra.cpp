@@ -38,7 +38,7 @@ void Ecra::limpa() {
    for (int i = 0; i < nLinhas; i++) {
       for (int j = 0; j < nColunas; j++) {
 
-         buffer[i][j] = '*'; // mudar futuramente
+         buffer[i][j] = '.'; // mudar futuramente
 
       }
    }
@@ -71,20 +71,47 @@ void Ecra::escreve(char ch) {
    // a linha eh valida!
    buffer[cursorL][cursorC] = ch;
    cursorC++;
-   if (cursorC == nColunas - 1) { // fim das colunas
-      cursorL++;
-      if (cursorL == nLinhas - 1) { // fim das linhas
-         return;
-      }
-
+   if (cursorC >= nColunas) { // fim das colunas
       cursorC = 0;
+      cursorL++;
    }
+}
+
+void Ecra::escreve(const std::string &texto) {
+   for (size_t i = 0; i < texto.length(); i++) { // .lenth() retorna size_t
+      escreve(texto[i]);
+   }
+}
+
+void Ecra::escreve(int l, int c, const std::string &texto) {
+   posiciona(l, c);
+   escreve(texto);
+}
+
+void Ecra::escreve(int l, int c, char ch) {
+   posiciona(l, c);
+   escreve(ch);
 }
 
 void Ecra::moldura(int l, int c, int altura, int largura) {
 
    // inserir os 4 cantos
+   escreve(l,c,'+');
+   escreve(l, c + largura - 1, '+');
+   escreve(l + altura - 1, c, '+');
+   escreve(l + altura - 1, c + largura - 1, '+');
 
+   // inserir as linhas horizontais
+   for (int i = c + 1; i < c + largura - 1; i++) {
+      escreve(l, i, '-');
+      escreve(l+altura-1, i, '-');
+   }
+
+   // inserir as linhas verticas
+   for (int i = l + 1; i < l + altura - 1; i++) {
+      escreve(i, c, '|');
+      escreve(i, c + largura - 1, '|');
+   }
 }
 
 void Ecra::mostra() const {

@@ -14,4 +14,6 @@ add_executable(poo_tp_2627
         Ecra.cpp
         Biblioteca.h
         Biblioteca.cpp
+        Posicao.cpp
+        Posicao.h
 )

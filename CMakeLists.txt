@@ -16,4 +16,6 @@ add_executable(poo_tp_2627
         Biblioteca.cpp
         Posicao.cpp
         Posicao.h
+        Fabrica.cpp
+        Fabrica.h
 )

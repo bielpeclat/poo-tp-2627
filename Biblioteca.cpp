@@ -1,7 +1,3 @@
-//
-// Created by bielpeclat on 11/3/26.
-//
-
 #include "Biblioteca.h"
 #include <iostream>
 

@@ -14,7 +14,7 @@ public:
    int getLinhas() const;
    int getColunas() const;
 
-   void limpa(); // por todas as posicoes com '', cursor em (0,0)
+   void limpa(); // por todas as posicoes com espaco, cursor em (0,0)
    void posiciona(int l, int c);       // move o cursor
    void escreve(char ch); // escreve na posicao cursor
    void escreve(const std::string &texto); // escreve na posicao cursor

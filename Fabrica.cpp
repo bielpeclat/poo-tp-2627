@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstdlib> //esta biblioteca vai ser necessária no futuro para quando tratarmos da distribuição aleatória dos recursos - crateras e minérios - pelo mapa.
+#include <cstdlib> // distribuicao aleatoria dos recursos ( crateras e minerios)
 
 #include "Fabrica.h"
 #include "Ecra.h"
@@ -7,16 +7,15 @@
 
 Fabrica::Fabrica(int l, int c) {
 
-    tam_Linhas_f = (l < 1) ? 1 : ((l > 26) ? 26 : l);
-    tam_Colunas_f = (c < 1) ? 1 : ((c > 26) ? 26 : c);
+    tam_Linhas_f = (l < 1) ? 1 : ((l > Settings::fabrica_max_linhas) ? Settings::fabrica_max_linhas : l);
+    tam_Colunas_f = (c < 1) ? 1 : ((c > Settings::fabrica_max_colunas) ? Settings::fabrica_max_colunas : c);
     creditos = Settings::fabrica_creditos_iniciais; // Valor que vem da classe Settings onde temos todos os nossos valores limite.
     instante = 0;
 
-    inicializaGrelhaVazia();
     geraElementosAleatorios();
 }
 
-void Fabrica::preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const {
+void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
 
     ecra.limpa();
 
@@ -26,18 +25,18 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const 
     ecra.moldura(lInicial, cInicial, altFabrica, largFabrica);
     ecra.escreve(lInicial + 1, cInicial + 1, ' ');
 
-    for (int c = 0; c < tam_Colunas_f; c++) { // régua ABC - Colunas
+    for (int c = 0; c < tam_Colunas_f; c++) { // regua ABC - Colunas
         ecra.escreve(lInicial + 1, cInicial + 2 + c, static_cast<char>('A' + c));
     }
 
-    for (int l = 0; l < tam_Linhas_f; l++) { // régua ABC - Colunas
+    for (int l = 0; l < tam_Linhas_f; l++) { // regua ABC - Colunas
         ecra.escreve(lInicial + 2 + l, cInicial + 1, static_cast<char>('A' + l));
     }
 
     for (int l = 0; l < tam_Linhas_f; l++) {
         for (int c = 0; c < tam_Colunas_f; c++) {
 
-            char simbolo = grelha[l][c];
+            char simbolo = grelha[l][c].getCaracter();
             ecra.escreve(lInicial + 2 + l, cInicial + 2 + c, simbolo);
         }
     }
@@ -45,60 +44,45 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const 
 
 void Fabrica::geraElementosAleatorios() {
 
-    // Crateras = #
-    for (int i = 0; i < Settings::fabrica_num_crateras; i++) {
-        int l, c;
-        do {
-            l = rand() % tam_Linhas_f;
-            c = rand() % tam_Colunas_f;
-        } while (grelha[l][c] != ' ');
+    colocaAleatorio(TipoTerreno::CRATERA, Settings::fabrica_num_crateras);
+    colocaAleatorio(TipoTerreno::FERRO, Settings::fabrica_num_depositos_ferro);
+    colocaAleatorio(TipoTerreno::SILICIO, Settings::fabrica_num_depositos_silicio);
+    colocaAleatorio(TipoTerreno::GELO, Settings::fabrica_num_depositos_gelo);
+}
 
-        grelha[l][c] = '#';
+void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
+    int livres = 0;
+
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            if (grelha[l][c].getTerreno() == TipoTerreno::SOLO) {
+                livres++;
+            }
+        }
+    }
+    if (quantos > livres) {
+        quantos = livres;
     }
 
     int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
-
-    // 2. Gerar Depósitos de Ferro (%)
-    for (int i = 0; i < Settings::fabrica_num_depositos_ferro; i++) {
-        int l, c;
-        do {
-            l = rand() % tam_Linhas_f;
-            c = rand() % tam_Colunas_f;
-        } while (grelha[l][c] != ' ');
-
-        grelha[l][c] = '%';
-        int qtdFerro = Settings::deposito_quantidade_min + (rand() % amplitude);
-    }
-
-    // 3. Depósitos de Silício ($)
-    for (int i = 0; i < Settings::fabrica_num_depositos_silicio; i++) {
-        int l, c;
-        do {
-            l = rand() % tam_Linhas_f;
-            c = rand() % tam_Colunas_f;
-        } while (grelha[l][c] != ' ');
-
-        grelha[l][c] = '$';
-        int qtdSilicio = Settings::deposito_quantidade_min + (rand() % amplitude);
-    }
-
-    // 4. Depósitos de Gelo (~)
-    for (int i = 0; i < Settings::fabrica_num_depositos_gelo; i++) {
-        int l, c;
-        do {
-            l = rand() % tam_Linhas_f;
-            c = rand() % tam_Colunas_f;
-        } while (grelha[l][c] != ' ');
-
-        grelha[l][c] = '~';
-        int qtdGelo = Settings::deposito_quantidade_min + (rand() % amplitude);
-    }
 }
 
-void Fabrica::inicializaGrelhaVazia() {
-    for (int l = 0; l < tam_Linhas_f; l++) { // Fiz para que a função percorre-se apenas as linhas e colunas reais da fábrica criada
-        for (int c = 0; c < tam_Colunas_f; c++) {
-            grelha[l][c] = ' ';
-        }
-    }
+int Fabrica::getLinhas() const {
+    return tam_Linhas_f;
+}
+
+int Fabrica::getColunas() const {
+    return tam_Colunas_f;
+}
+
+int Fabrica::getCreditos() const {
+    return creditos;
+}
+
+int Fabrica::getInstante() const {
+    return instante;
+}
+
+const Posicao &Fabrica::getPosicao(int l, int c) const {
+    return grelha[l][c];
 }

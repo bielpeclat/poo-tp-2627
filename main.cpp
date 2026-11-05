@@ -1,4 +1,7 @@
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+
 
 #include "Settings.h"
 #include "Ecra.h"
@@ -11,13 +14,19 @@
 int main() {
     std::cout << "Simulador de fabrica em Marte" << std::endl;
 
+    srand(time(nullptr));
+
     Ecra e1(20, 50);
     Fabrica f1(10, 10);
     f1.preparaEcra(e1, 0, 0);
     e1.mostra();
+    for (int l = 0; l < f1.getLinhas(); l++)
+        for (int c = 0; c < f1.getColunas(); c++)
+            if (f1.getPosicao(l, c).eDeposito())
+                std::cout << f1.getPosicao(l, c).getDescricao() << std::endl;
 
     Ecra e2(20, 50);
-    Fabrica f2(10, 10);
+    Fabrica f2(4, 4);
     f2.preparaEcra(e2, 0, 0);
     e2.mostra();
 

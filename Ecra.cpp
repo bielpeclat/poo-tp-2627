@@ -35,7 +35,7 @@ void Ecra::limpa() {
    for (int i = 0; i < nLinhas; i++) {
       for (int j = 0; j < nColunas; j++) {
 
-         buffer[i][j] = '*'; // mudar futuramente
+         buffer[i][j] = ' ';
 
       }
    }

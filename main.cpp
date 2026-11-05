@@ -9,7 +9,7 @@
 #include "Posicao.h"
 #include "Fabrica.h"
 
-// Notas: Não usar nunca o limpa nem o mostra no main. Isto são funções que, embora afetem o ecrã, elas são aplicadas na fábrica.
+// Notas: Nao usar nunca o limpa nem o mostra no main. Isto sao funcoes que, embora afetem o ecra, elas sao aplicadas na fabrica.
 
 int main() {
     std::cout << "Simulador de fabrica em Marte" << std::endl;

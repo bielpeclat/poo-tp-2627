@@ -4,6 +4,7 @@
 #include "Fabrica.h"
 #include "Ecra.h"
 #include "Settings.h"
+#include "Coordenada.h"
 
 Fabrica::Fabrica(int l, int c) {
 
@@ -19,7 +20,7 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
 
     ecra.limpa();
 
-    int altFabrica = tam_Linhas_f + 3; // +3 porque temos de guardar +1 para a "régua" (ABC) e +2 por causa da moldura de cada lado (esquerdo e direito).
+    int altFabrica = tam_Linhas_f + 3; // +3 porque temos de guardar +1 para a "regua" (ABC) e +2 por causa da moldura de cada lado (esquerdo e direito).
     int largFabrica = tam_Colunas_f + 3;
 
     ecra.moldura(lInicial, cInicial, altFabrica, largFabrica);
@@ -29,7 +30,7 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
         ecra.escreve(lInicial + 1, cInicial + 2 + c, static_cast<char>('A' + c));
     }
 
-    for (int l = 0; l < tam_Linhas_f; l++) { // regua ABC - Colunas
+    for (int l = 0; l < tam_Linhas_f; l++) { // regua ABC - Linhas
         ecra.escreve(lInicial + 2 + l, cInicial + 1, static_cast<char>('A' + l));
     }
 
@@ -65,6 +66,19 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
     }
 
     int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
+    for (int i = 0; i < quantos; i++) {
+        int l, c;
+        do {
+            l = rand() % tam_Linhas_f;
+            c = rand() % tam_Colunas_f;
+        } while (grelha[l][c].getTerreno() != TipoTerreno::SOLO);
+        if (tipo == TipoTerreno::CRATERA) {
+            grelha[l][c].transformaEmCratera();
+        } else {
+            int qtd = Settings::deposito_quantidade_min + (rand() % amplitude);
+            grelha[l][c].transformaEmDeposito(tipo, qtd);
+        }
+    }
 }
 
 int Fabrica::getLinhas() const {
@@ -85,4 +99,33 @@ int Fabrica::getInstante() const {
 
 const Posicao &Fabrica::getPosicao(int l, int c) const {
     return grelha[l][c];
+}
+
+std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
+
+    if (!Coordenada::valida(lc, tam_Linhas_f, tam_Colunas_f)) {
+        return "Posicao invalida: " + lc + "\n";
+    }
+
+    if (raio < 0) {
+        return "Raio invalido\n";
+    }
+
+    Coordenada centro(lc);
+
+    std::string resultado;
+
+    for (int l = centro.getLinha() - raio; l <= centro.getLinha() + raio; l++) {
+        for (int c = centro.getColuna() - raio; c <= centro.getColuna() + raio; c++) {
+            if (l < 0 || l >= tam_Linhas_f || c < 0 || c >= tam_Colunas_f) {
+                continue;
+            }
+            Coordenada atual(l,c);
+            resultado += atual.toString();
+            resultado += ": ";
+            resultado += grelha[l][c].getDescricao();
+            resultado += "\n";
+        }
+    }
+    return resultado;
 }

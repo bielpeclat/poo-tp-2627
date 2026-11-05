@@ -1,13 +1,15 @@
 #ifndef POO_TP_2627_FABRICA_H
 #define POO_TP_2627_FABRICA_H
 
+#include <string>
 #include "Ecra.h"
 #include "Posicao.h"
 #include "Settings.h"
 
+
 class Fabrica {
 
-    int tam_Linhas_f, tam_Colunas_f;           // tamanho da fabrica sem contar com a regua (ABC...) e os +2 espaços da moldura.
+    int tam_Linhas_f, tam_Colunas_f;           // tamanho da fabrica sem contar com a regua (ABC...) e os +2 espacos da moldura.
     int creditos;
     int instante;
 
@@ -28,6 +30,9 @@ public:
    int getCreditos() const;
    int getInstante() const;
    const Posicao& getPosicao(int l, int c) const;
+
+   std::string listaPosicao(const std::string& lc, int raio = 0) const;
+
 };
 
 #endif //POO_TP_2627_FABRICA_H

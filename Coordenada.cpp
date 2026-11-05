@@ -3,7 +3,7 @@
 //
 
 #include <string>
-#include "Coordenadas.h"
+#include "Coordenada.h"
 
 Coordenada::Coordenada(const std::string& cords) {
 

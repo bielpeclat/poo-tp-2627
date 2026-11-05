@@ -46,8 +46,8 @@ void Ecra::limpa() {
 void Ecra::posiciona(int l, int c) {
 
    // a posicao esta nos limites do ecra?
-   if ((l < 0 || l > nLinhas - 1) ||
-       (c < 0 || c > nColunas - 1)) {
+   if ((l < 0 || l >= nLinhas) ||
+       (c < 0 || c >= nColunas)) {
       cursorL = -1;
       cursorC = -1;
    } else {

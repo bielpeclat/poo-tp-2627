@@ -20,10 +20,14 @@ class Fabrica {
 
    void desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const;
 
+   int quantidadeAleatoria() const;
+
+   Fabrica(int l, int c, bool aleatoria);
+
+
 public:
     Fabrica(int l, int c); // O nosso construtor pedido no Enunciado
-    explicit Fabrica(const std::string &nomeFicheiro); // Construtor mas com recurso ao mapa do tal ficheiro indicado.
-                                                       // 'explicit' obriga a escrever explicitamente quando queremos criar um objeto novo, evitando que o programa crie objetos por engano.
+    static Fabrica* carrega(const std::string& nomeFicheiro);
     void preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const;
 
    int getLinhas() const;

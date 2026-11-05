@@ -1,20 +1,23 @@
 #include <iostream>
 #include <cstdlib> // distribuicao aleatoria dos recursos ( crateras e minerios)
+#include <fstream>
 
 #include "Fabrica.h"
 #include "Ecra.h"
 #include "Settings.h"
 #include "Coordenada.h"
 
-Fabrica::Fabrica(int l, int c) {
+Fabrica::Fabrica(int l, int c, bool aleatoria) {
 
     tam_Linhas_f = (l < 1) ? 1 : ((l > Settings::fabrica_max_linhas) ? Settings::fabrica_max_linhas : l);
     tam_Colunas_f = (c < 1) ? 1 : ((c > Settings::fabrica_max_colunas) ? Settings::fabrica_max_colunas : c);
     creditos = Settings::fabrica_creditos_iniciais; // Valor que vem da classe Settings onde temos todos os nossos valores limite.
     instante = 0;
 
-    geraElementosAleatorios();
+    if (aleatoria) geraElementosAleatorios();
 }
+
+Fabrica::Fabrica(int l, int c) : Fabrica(l, c, true) {}
 
 void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
 
@@ -71,7 +74,6 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
         quantos = livres;
     }
 
-    int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
     for (int i = 0; i < quantos; i++) {
         int l, c;
         do {
@@ -81,8 +83,7 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
         if (tipo == TipoTerreno::CRATERA) {
             grelha[l][c].transformaEmCratera();
         } else {
-            int qtd = Settings::deposito_quantidade_min + (rand() % amplitude);
-            grelha[l][c].transformaEmDeposito(tipo, qtd);
+            grelha[l][c].transformaEmDeposito(tipo, quantidadeAleatoria());
         }
     }
 }
@@ -159,6 +160,66 @@ void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) 
 
 }
 
+Fabrica* Fabrica::carrega(const std::string& nomeFicheiro) {
 
+    std::ifstream f(nomeFicheiro);
 
+    if (!f) {
+        return nullptr;
+    }
 
+    int nl, nc;
+
+    if (!(f >> nl >> nc)) return nullptr;
+
+    if (nl < 1 || nl > Settings::fabrica_max_linhas ||
+        nc < 1 || nc > Settings::fabrica_max_colunas) {
+        return nullptr;
+    }
+
+    // le e valida o mapa todo antes de criar a fabrica
+    std::string linhas[Settings::fabrica_max_linhas];
+
+    for (int l = 0; l < nl; l++) {
+        if (!(f >> linhas[l])) return nullptr;
+
+        if (static_cast<int>(linhas[l].size()) != nc) return nullptr;
+
+        for (int c = 0; c < nc; c++) {
+            char ch = linhas[l][c];
+            if (ch != '.' && ch != '#' && ch != '%' && ch != '$' && ch != '~') {
+                return nullptr;
+            }
+        }
+    }
+
+    Fabrica* fab = new Fabrica(nl, nc, false);
+
+    for (int l = 0; l < nl; l++) {
+        for (int c = 0; c < nc; c++) {
+            switch (linhas[l][c]) {
+                case '#':
+                    fab->grelha[l][c].transformaEmCratera();
+                    break;
+                case '%':
+                    fab->grelha[l][c].transformaEmDeposito(TipoTerreno::FERRO, fab->quantidadeAleatoria());
+                    break;
+                case '$':
+                    fab->grelha[l][c].transformaEmDeposito(TipoTerreno::SILICIO, fab->quantidadeAleatoria());
+                    break;
+                case '~':
+                    fab->grelha[l][c].transformaEmDeposito(TipoTerreno::GELO, fab->quantidadeAleatoria());
+                    break;
+                default: // '.' fica solo
+                    break;
+            }
+        }
+    }
+
+    return fab;
+}
+
+int Fabrica::quantidadeAleatoria() const {
+    int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
+    return Settings::deposito_quantidade_min + (rand() % amplitude);
+}

@@ -5,6 +5,5 @@
 #include <string>
 #include "Coordenadas.h"
 
-Coordenada::Coordenada(const std::string& cords) {
-
-}
+//
+//Coordenada::Coordenada(const std::string& cords) {}

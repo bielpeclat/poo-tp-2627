@@ -5,7 +5,7 @@
 #ifndef POO_TP_2627_COORDENADAS_H
 #define POO_TP_2627_COORDENADAS_H
 
-static bool valida(const std::string& c, *);
+//static bool valida(const std::string& c, *);
 
 class Coordenada {
    int linha, coluna; // (0-25)

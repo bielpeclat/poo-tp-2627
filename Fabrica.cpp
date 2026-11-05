@@ -12,33 +12,34 @@ Fabrica::Fabrica(int l, int c) {
     creditos = Settings::fabrica_creditos_iniciais; // Valor que vem da classe Settings onde temos todos os nossos valores limite.
     instante = 0;
 
-    // 3. Reservar a matriz da grelha com terreno normal (Solo)
     inicializaGrelhaVazia();
-
-    // 4. Colocar as crateras e depósitos aleatórios
     geraElementosAleatorios();
 }
 
 void Fabrica::preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const {
-    // 1. Limpar o buffer virtual do ecrã
+
     ecra.limpa();
 
-    // 2. Calcular dimensões da moldura da fábrica
-    // nLinhas/nColunas da fábrica + 1 para a régua + 2 para as bordas da moldura
-    int altFabrica = tam_Linhas_f + 3;
+    int altFabrica = tam_Linhas_f + 3; // +3 porque temos de guardar +1 para a "régua" (ABC) e +2 por causa da moldura de cada lado (esquerdo e direito).
     int largFabrica = tam_Colunas_f + 3;
 
-    // Desenha a moldura no canto superior esquerdo (linha 0, coluna 0)
     ecra.moldura(lInicial, cInicial, altFabrica, largFabrica);
+    ecra.escreve(lInicial + 1, cInicial + 1, ' ');
 
-    // 3. Desenhar as réguas com letras maiúsculas (A, B, C...)
-    // Colunas (linha 1 do ecrã virtual)
-    for (int c = 0; c < tam_Colunas_f; c++) {
+    for (int c = 0; c < tam_Colunas_f; c++) { // régua ABC - Colunas
         ecra.escreve(lInicial + 1, cInicial + 2 + c, static_cast<char>('A' + c));
     }
-    // Linhas (coluna 1 do ecrã virtual)
-    for (int l = 0; l < tam_Linhas_f; l++) {
+
+    for (int l = 0; l < tam_Linhas_f; l++) { // régua ABC - Colunas
         ecra.escreve(lInicial + 2 + l, cInicial + 1, static_cast<char>('A' + l));
+    }
+
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+
+            char simbolo = grelha[l][c];
+            ecra.escreve(lInicial + 2 + l, cInicial + 2 + c, simbolo);
+        }
     }
 }
 
@@ -49,5 +50,9 @@ void Fabrica::geraElementosAleatorios() {
 }
 
 void Fabrica::inicializaGrelhaVazia() {
-
+    for (int l = 0; l < tam_Linhas_f; l++) { // Fiz para que a função percorre-se apenas as linhas e colunas reais da fábrica criada
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            grelha[l][c] = ' ';
+        }
+    }
 }

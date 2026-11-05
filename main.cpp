@@ -4,17 +4,24 @@
 #include "Ecra.h"
 #include "Biblioteca.h"
 #include "Posicao.h"
+#include "Fabrica.h"
+
+// Notas: Não usar nunca o limpa nem o mostra no main. Isto são funções que, embora afetem o ecrã, elas são aplicadas na fábrica.
 
 int main() {
     std::cout << "Simulador de fabrica em Marte" << std::endl;
 
-    Ecra e1(3, 3);
-    e1.limpa();
-    e1.moldura(0, 0, 3, 3);
-    e1.escreve(3, 3, 'X');
+    Ecra e1(40, 80);
+    Fabrica f1(10, 10);
+    f1.preparaEcra(e1, 0, 0);
     e1.mostra();
-    aguardaEnter();
-    std::cout << "Vamos declarar uma posicao isolada...\n";
+
+    /*e1.mostra();
+    e1.moldura(0, 0, 15, 30);
+    e1.escreve(3, 3, 'X');
+    e1.mostra();*/
+    //aguardaEnter();
+    /*std::cout << "Vamos declarar uma posicao isolada...\n";
     Posicao p1;
     std::cout << p1.getDescricao() << std::endl;
     p1.transformaEmCratera();
@@ -22,7 +29,7 @@ int main() {
     p1.transformaEmDeposito(TipoTerreno::SILICIO, 7);
     std::cout << p1.getDescricao() << std::endl;
     std::cout << p1.getQuantidade() << std::endl;
-    aguardaEnter();
+    aguardaEnter();*/
 
     return 0;
 }

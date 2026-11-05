@@ -9,6 +9,8 @@ class Fabrica {
     int creditos;
     int instante;
 
+    char grelha[26][26];
+
     void inicializaGrelhaVazia();
     void geraElementosAleatorios(); // Para mais tarde colocar as crateras e os depósitos.
 

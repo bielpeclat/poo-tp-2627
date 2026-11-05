@@ -11,10 +11,15 @@
 int main() {
     std::cout << "Simulador de fabrica em Marte" << std::endl;
 
-    Ecra e1(40, 80);
+    Ecra e1(20, 50);
     Fabrica f1(10, 10);
     f1.preparaEcra(e1, 0, 0);
     e1.mostra();
+
+    Ecra e2(20, 50);
+    Fabrica f2(10, 10);
+    f2.preparaEcra(e2, 0, 0);
+    e2.mostra();
 
     /*e1.mostra();
     e1.moldura(0, 0, 15, 30);

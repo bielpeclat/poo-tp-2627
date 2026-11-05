@@ -44,9 +44,55 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const 
 }
 
 void Fabrica::geraElementosAleatorios() {
-    // Coloca a quantidade de crateras definida em Settings::num_crateras em posições livres aleatórias
-    // Coloca a quantidade de depósitos definida em Settings::num_depositos
-    // Para cada depósito, sorteia o tipo (ferro, silício ou gelo) e a quantidade inicial (entre 40 e 60)
+
+    // Crateras = #
+    for (int i = 0; i < Settings::fabrica_num_crateras; i++) {
+        int l, c;
+        do {
+            l = rand() % tam_Linhas_f;
+            c = rand() % tam_Colunas_f;
+        } while (grelha[l][c] != ' ');
+
+        grelha[l][c] = '#';
+    }
+
+    int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
+
+    // 2. Gerar Depósitos de Ferro (%)
+    for (int i = 0; i < Settings::fabrica_num_depositos_ferro; i++) {
+        int l, c;
+        do {
+            l = rand() % tam_Linhas_f;
+            c = rand() % tam_Colunas_f;
+        } while (grelha[l][c] != ' ');
+
+        grelha[l][c] = '%';
+        int qtdFerro = Settings::deposito_quantidade_min + (rand() % amplitude);
+    }
+
+    // 3. Depósitos de Silício ($)
+    for (int i = 0; i < Settings::fabrica_num_depositos_silicio; i++) {
+        int l, c;
+        do {
+            l = rand() % tam_Linhas_f;
+            c = rand() % tam_Colunas_f;
+        } while (grelha[l][c] != ' ');
+
+        grelha[l][c] = '$';
+        int qtdSilicio = Settings::deposito_quantidade_min + (rand() % amplitude);
+    }
+
+    // 4. Depósitos de Gelo (~)
+    for (int i = 0; i < Settings::fabrica_num_depositos_gelo; i++) {
+        int l, c;
+        do {
+            l = rand() % tam_Linhas_f;
+            c = rand() % tam_Colunas_f;
+        } while (grelha[l][c] != ' ');
+
+        grelha[l][c] = '~';
+        int qtdGelo = Settings::deposito_quantidade_min + (rand() % amplitude);
+    }
 }
 
 void Fabrica::inicializaGrelhaVazia() {

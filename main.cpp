@@ -68,6 +68,12 @@ void demoCarrega(const std::string &nome) {
     delete f;
 }
 
+void terminaSimulacao(Fabrica *&f) {
+    delete f;
+    f = nullptr;
+    std::cout << "Simulacao terminada\n";
+}
+
 int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
@@ -95,6 +101,15 @@ int main() {
     demoCarrega("./mapas/mapa_erro_char.txt");
     demoCarrega("./mapas/mapa_erro_tam.txt");
     demoCarrega("./mapas/naoexiste.txt");
+    aguardaEnter();
+
+    Fabrica *atual = Fabrica::carrega("./mapas/mapa1.txt");
+    if (atual == nullptr) {
+        atual = new Fabrica(10, 10);
+    }
+    mostraFabrica(*atual);
+
+    terminaSimulacao(atual);
 
     return 0;
 }

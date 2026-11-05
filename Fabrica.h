@@ -1,6 +1,7 @@
 #ifndef POO_TP_2627_FABRICA_H
 #define POO_TP_2627_FABRICA_H
 
+#include "Ecra.h"
 
 class Fabrica {
 
@@ -15,6 +16,7 @@ public:
     Fabrica(int l, int c); // O nosso construtor pedido no Enunciado
     explicit Fabrica(const std::string &nomeFicheiro); // Construtor mas com recurso ao mapa do tal ficheiro indicado.
                                                        // 'explicit' obriga a escrever explicitamente quando queremos criar um objeto novo, evitando que o programa crie objetos por engano.
+    void preparaEcra(Ecra &ecra, int lInicial, int cInicial) const;
 };
 
 #endif //POO_TP_2627_FABRICA_H

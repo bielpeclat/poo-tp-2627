@@ -9,7 +9,7 @@
 
 class Coordenada {
 public:
-   static bool valida(const std::string& c, );
+   // static bool valida(const std::string& c, );
 
    int linha, coluna; // (0-25)
 

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "Settings.h"
 #include "Ecra.h"
 
@@ -86,6 +87,10 @@ void Ecra::escreve(const std::string &texto) {
 void Ecra::escreve(int l, int c, const std::string &texto) {
    posiciona(l, c);
    escreve(texto);
+}
+
+void Ecra::escreve(int i) {
+   escreve(std::to_string(i));
 }
 
 void Ecra::escreve(int l, int c, char ch) {

@@ -22,6 +22,7 @@ public:
    void posiciona(int l, int c);       // move o cursor
    void escreve(char ch); // escreve na posicao cursor
    void escreve(const std::string &texto); // escreve na posicao cursor
+   void escreve(int i);
    void escreve(int l, int c, const std::string &texto); // primeiro posiciona, depois escreve
    void escreve(int l, int c, char ch);
    void moldura(int l, int c, int altura, int largura);

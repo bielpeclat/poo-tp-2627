@@ -41,6 +41,12 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
             ecra.escreve(lInicial + 2 + l, cInicial + 2 + c, simbolo);
         }
     }
+    int altPainel = altFabrica;
+        if (altPainel < 10) {
+            altPainel = 10;
+        }
+
+    desenhaPainel(ecra, lInicial, cInicial + largFabrica + 1, altPainel);
 }
 
 void Fabrica::geraElementosAleatorios() {
@@ -129,3 +135,30 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
     }
     return resultado;
 }
+
+void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const {
+    int largura = 30;
+    ecra.moldura(lInicial, cInicial, altura, largura);
+
+    int l = lInicial + 1;
+    int c = cInicial + 2;
+
+    ecra.escreve(l, c, "Instante: ");
+    ecra.escreve(instante);
+
+    ecra.escreve(l + 1, c, "Creditos: ");
+    ecra.escreve(creditos);
+
+    ecra.escreve(l + 2, c, "Maquinas: ");
+    ecra.escreve(0); // ainda nao temos maquinas para o checkpoint1
+
+    ecra.escreve(l + 3, c, "Engenheiros: ");
+    ecra.escreve(0); // ainda nao temos engenheiros para o checkpoint1
+
+    ecra.escreve(l + 5, c, "No ultimo instante: ");
+
+}
+
+
+
+

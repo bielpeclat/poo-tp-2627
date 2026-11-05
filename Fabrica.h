@@ -18,6 +18,8 @@ class Fabrica {
     void colocaAleatorio(TipoTerreno tipo, int quantos);
     void geraElementosAleatorios(); // colocar as crateras e os depositos
 
+   void desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const;
+
 public:
     Fabrica(int l, int c); // O nosso construtor pedido no Enunciado
     explicit Fabrica(const std::string &nomeFicheiro); // Construtor mas com recurso ao mapa do tal ficheiro indicado.

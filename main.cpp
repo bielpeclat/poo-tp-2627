@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <ctime>
-#include <cstdlib>
 
 #include "Ecra.h"
 #include "Coordenada.h"

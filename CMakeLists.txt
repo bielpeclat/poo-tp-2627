@@ -22,6 +22,8 @@ add_executable(poo_tp_2627
         Fabrica.h
         Maquina.cpp
         Maquina.h
+        Engenheiro.cpp
+        Engenheiro.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

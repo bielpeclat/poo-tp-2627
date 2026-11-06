@@ -88,11 +88,6 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
     }
 }
 
-
-const Posicao &Fabrica::getPosicao(int l, int c) const {
-    return grelha[l][c];
-}
-
 std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
 
     if (!Coordenada::valida(lc, tam_Linhas_f, tam_Colunas_f)) {

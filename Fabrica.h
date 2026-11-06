@@ -9,7 +9,7 @@
 
 class Fabrica {
 
-    int tam_Linhas_f, tam_Colunas_f;           // tamanho da fabrica sem contar com a regua (ABC...) e os +2 espacos da moldura.
+    int tam_Linhas_f, tam_Colunas_f;  // tamanho da fabrica sem contar com a regua (ABC...) e os +2 espacos da moldura.
     int creditos;
     int instante;
 
@@ -27,6 +27,8 @@ class Fabrica {
 
 public:
     Fabrica(int l, int c); // O nosso construtor pedido no Enunciado
+    // esse construtor tem posicoes aleatorias (delegacao para outro construtor)
+
     static Fabrica* carrega(const std::string& nomeFicheiro);
     void preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const;
 

@@ -168,7 +168,7 @@ Fabrica* Fabrica::carrega(const std::string& nomeFicheiro) {
     for (int l = 0; l < nl; l++) {
         if (!(f >> linhas[l])) return nullptr;
 
-        if (static_cast<int>(linhas[l].size()) != nc) return nullptr;
+        if (static_cast<int>(linhas[l].size()) != nc) return nullptr; // size devolve size_t
 
         for (int c = 0; c < nc; c++) {
             char ch = linhas[l][c];

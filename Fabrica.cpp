@@ -1,5 +1,4 @@
-#include <iostream>
-#include <cstdlib> // distribuicao aleatoria dos recursos ( crateras e minerios)
+#include <string>
 #include <fstream>
 
 #include "Fabrica.h"
@@ -7,17 +6,18 @@
 #include "Settings.h"
 #include "Coordenada.h"
 
-Fabrica::Fabrica(int l, int c, bool aleatoria) {
+Fabrica::Fabrica(int l, int c, bool aleatoria) { // bool aleatoria necessária para caso a fabrica seja criada apartir de um mapa
 
+    //ternários aninhados
     tam_Linhas_f = (l < 1) ? 1 : ((l > Settings::fabrica_max_linhas) ? Settings::fabrica_max_linhas : l);
     tam_Colunas_f = (c < 1) ? 1 : ((c > Settings::fabrica_max_colunas) ? Settings::fabrica_max_colunas : c);
-    creditos = Settings::fabrica_creditos_iniciais; // Valor que vem da classe Settings onde temos todos os nossos valores limite.
+    creditos = Settings::fabrica_creditos_iniciais;
     instante = 0;
 
     if (aleatoria) geraElementosAleatorios();
 }
 
-Fabrica::Fabrica(int l, int c) : Fabrica(l, c, true) {}
+Fabrica::Fabrica(int l, int c) : Fabrica(l, c, true) {} // delegação
 
 void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
 
@@ -27,7 +27,7 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
     int largFabrica = tam_Colunas_f + 3;
 
     ecra.moldura(lInicial, cInicial, altFabrica, largFabrica);
-    ecra.escreve(lInicial + 1, cInicial + 1, ' ');
+    ecra.escreve(lInicial + 1, cInicial + 1, ' '); // Apenas pro espaço entre os 'A'.
 
     for (int c = 0; c < tam_Colunas_f; c++) { // regua ABC - Colunas
         ecra.escreve(lInicial + 1, cInicial + 2 + c, static_cast<char>('A' + c));

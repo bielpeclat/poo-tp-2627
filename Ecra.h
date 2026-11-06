@@ -11,8 +11,8 @@ class Ecra {
 public:
    Ecra(int linhas = Settings::ecra_max_linhas, int colunas = Settings::ecra_max_colunas);
 
-   int getLinhas() const;
-   int getColunas() const;
+   int getLinhas() const {return nLinhas;};
+   int getColunas() const {return nColunas;};
 
    void limpa(); // por todas as posicoes com espaco, cursor em (0,0)
    void posiciona(int l, int c);       // move o cursor

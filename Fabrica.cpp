@@ -61,7 +61,8 @@ void Fabrica::geraElementosAleatorios() {
 }
 
 void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
-    int livres = 0;
+
+    int livres = 0; // contar quantos espaços livres temos
 
     for (int l = 0; l < tam_Linhas_f; l++) {
         for (int c = 0; c < tam_Colunas_f; c++) {
@@ -70,16 +71,19 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
             }
         }
     }
-    if (quantos > livres) {
+    if (quantos > livres) { // salvaguardar que existe sempre espaço para colocar tudo
         quantos = livres;
     }
 
     for (int i = 0; i < quantos; i++) {
+
         int l, c;
+
         do {
             l = rand() % tam_Linhas_f;
             c = rand() % tam_Colunas_f;
         } while (grelha[l][c].getTerreno() != TipoTerreno::SOLO);
+
         if (tipo == TipoTerreno::CRATERA) {
             grelha[l][c].transformaEmCratera();
         } else {
@@ -118,6 +122,7 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
 }
 
 void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const {
+
     int largura = 30;
     ecra.moldura(lInicial, cInicial, altura, largura);
 

@@ -4,7 +4,6 @@
 #include <cstdlib>
 
 #include "Ecra.h"
-#include "Biblioteca.h"
 #include "Coordenada.h"
 #include "Fabrica.h"
 

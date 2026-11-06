@@ -13,10 +13,9 @@ class Fabrica {
     int creditos;
     int instante;
 
-    Posicao grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
-
-    void colocaAleatorio(TipoTerreno tipo, int quantos);
-    void geraElementosAleatorios(); // colocar as crateras e os depositos
+   Posicao grelha[Settings::fabrica_max_linhas][Settings::fabrica_max_colunas];
+   void colocaAleatorio(TipoTerreno tipo, int quantos);
+   void geraElementosAleatorios(); // colocar as crateras e os depositos
 
    void desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const;
 

@@ -73,7 +73,7 @@ void Ecra::escreve(const std::string &texto) { // Talvez futuramente.
    }
 }
 
-void Ecra::escreve(int l, int c, const std::string &texto) { // Talvez futuramente.
+void Ecra::escreve(int l, int c, const std::string &texto) {
    posiciona(l, c);
    escreve(texto);
 }
@@ -108,7 +108,7 @@ void Ecra::moldura(int l, int c, int altura, int largura) {
    }
 }
 
-void Ecra::mostra() const {
+void Ecra::mostra() const { // transicao da memoria para o cout
    for (int i = 0; i < nLinhas; i++) {
       for (int j = 0; j < nColunas; j++) {
 

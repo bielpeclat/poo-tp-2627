@@ -44,10 +44,12 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
             ecra.escreve(lInicial + 2 + l, cInicial + 2 + c, simbolo);
         }
     }
-    int altPainel = altFabrica;
+    /*int altPainel = altFabrica;
         if (altPainel < 10) {
             altPainel = 10;
-        }
+      }*/
+
+    int altPainel = std::max(altFabrica, 10); // mais legivel e faz o mesmo
 
     desenhaPainel(ecra, lInicial, cInicial + largFabrica + 1, altPainel);
 }
@@ -98,19 +100,19 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
         return "Posicao invalida: " + lc + "\n";
     }
 
-    if (raio < 0) {
-        return "Raio invalido\n";
-    }
+    if (raio < 0) return "Raio invalido\n";
 
-    Coordenada centro(lc);
+    Coordenada centro(lc); // assume que a string ja foi validada
 
-    std::string resultado;
+    std::string resultado; // inicializado a ""
 
     for (int l = centro.getLinha() - raio; l <= centro.getLinha() + raio; l++) {
         for (int c = centro.getColuna() - raio; c <= centro.getColuna() + raio; c++) {
             if (l < 0 || l >= tam_Linhas_f || c < 0 || c >= tam_Colunas_f) {
-                continue;
+                continue; // esta fora da grelha
             }
+
+            // else
             Coordenada atual(l,c);
             resultado += atual.toString();
             resultado += ": ";
@@ -123,7 +125,7 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
 
 void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const {
 
-    int largura = 30;
+    int largura = 30; // procurar a constante no settings
     ecra.moldura(lInicial, cInicial, altura, largura);
 
     int l = lInicial + 1;
@@ -149,9 +151,7 @@ Fabrica* Fabrica::carrega(const std::string& nomeFicheiro) {
 
     std::ifstream f(nomeFicheiro);
 
-    if (!f) {
-        return nullptr;
-    }
+    if (!f) return nullptr;
 
     int nl, nc;
 
@@ -169,16 +169,17 @@ Fabrica* Fabrica::carrega(const std::string& nomeFicheiro) {
         if (!(f >> linhas[l])) return nullptr;
 
         if (static_cast<int>(linhas[l].size()) != nc) return nullptr; // size devolve size_t
+        // tamanho errado -> (.size() != nc)
 
         for (int c = 0; c < nc; c++) {
             char ch = linhas[l][c];
             if (ch != '.' && ch != '#' && ch != '%' && ch != '$' && ch != '~') {
-                return nullptr;
+                return nullptr; // caracter invalido
             }
         }
     }
 
-    Fabrica* fab = new Fabrica(nl, nc, false);
+    Fabrica* fab = new Fabrica(nl, nc, false); // criar fabrica a partir do ficheiro (bool aleatorio = false)
 
     for (int l = 0; l < nl; l++) {
         for (int c = 0; c < nc; c++) {

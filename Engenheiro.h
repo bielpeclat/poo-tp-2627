@@ -8,6 +8,7 @@
 #include <sstream>
 
 // ATENÇÃO! EU ACHO QUE FAZER A CLASS ENGENHEIRO É DEMAIS PRO CHECKPOINT 1!
+// NÃO ADICIONEI NADA AO MAIN NEM AO DESENHA PAINEL PORQUE ISTO NÃO É PARA O CHECKPOINT 1!
 
 class Maquina; // Fiz class Maquina aqui só porque alguns métodos pedidos para a classe Engenheiro
                // precisam dessa class. Mais tarde obviamente deverá ter a sua própria classe e depois

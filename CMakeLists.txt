@@ -12,8 +12,6 @@ add_executable(poo_tp_2627
         Settings.h
         Ecra.h
         Ecra.cpp
-        Biblioteca.h
-        Biblioteca.cpp
         Posicao.cpp
         Posicao.h
         Coordenada.cpp

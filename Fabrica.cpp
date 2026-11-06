@@ -88,21 +88,6 @@ void Fabrica::colocaAleatorio(TipoTerreno tipo, int quantos) {
     }
 }
 
-int Fabrica::getLinhas() const {
-    return tam_Linhas_f;
-}
-
-int Fabrica::getColunas() const {
-    return tam_Colunas_f;
-}
-
-int Fabrica::getCreditos() const {
-    return creditos;
-}
-
-int Fabrica::getInstante() const {
-    return instante;
-}
 
 const Posicao &Fabrica::getPosicao(int l, int c) const {
     return grelha[l][c];

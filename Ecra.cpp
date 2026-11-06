@@ -23,14 +23,6 @@ Ecra::Ecra(int linhas, int colunas) {
    limpa();
 }
 
-int Ecra::getLinhas() const {
-   return nLinhas;
-}
-
-int Ecra::getColunas() const {
-   return nColunas;
-}
-
 void Ecra::limpa() {
    for (int i = 0; i < nLinhas; i++) {
       for (int j = 0; j < nColunas; j++) {

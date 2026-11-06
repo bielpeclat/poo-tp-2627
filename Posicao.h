@@ -10,17 +10,17 @@ private:
    TipoTerreno terreno;
    int quantidade;
 public:
-   Posicao();
+   Posicao(); // esta vazia porque o construtor poem solo/ n = 0
 
-   TipoTerreno getTerreno() const;
-   int getQuantidade() const;
+   TipoTerreno getTerreno() const {return terreno; }
+   int getQuantidade() const { return quantidade; }
 
    bool transformaEmDeposito(TipoTerreno t, int q);
    void transformaEmCratera();
    bool eDeposito() const;
-   bool removeUnidade();
-   char getCaracter() const;
-   std::string getDescricao() const;
+   bool removeUnidade(); // tira 1 do deposito da posicao atual
+   char getCaracter() const; // (solo/ cratera/ deposito)
+   std::string getDescricao() const; // (tipo + quantidade)
 
 };
 

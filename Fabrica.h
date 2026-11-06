@@ -30,11 +30,11 @@ public:
     static Fabrica* carrega(const std::string& nomeFicheiro);
     void preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const;
 
-   int getLinhas() const;
-   int getColunas() const;
+   int getLinhas() const {return tam_Linhas_f; }
+   int getColunas() const {return tam_Colunas_f; }
 
-   int getCreditos() const;
-   int getInstante() const;
+   int getCreditos() const {return creditos; }
+   int getInstante() const {return instante; }
    const Posicao& getPosicao(int l, int c) const;
 
    std::string listaPosicao(const std::string& lc, int raio = 0) const;

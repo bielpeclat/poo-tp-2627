@@ -6,14 +6,6 @@
 
 Posicao::Posicao() : terreno(TipoTerreno::SOLO), quantidade(0) {}
 
-TipoTerreno Posicao::getTerreno() const {
-   return terreno;
-}
-
-int Posicao::getQuantidade() const {
-   return quantidade;
-}
-
 bool Posicao::transformaEmDeposito(TipoTerreno t, int q) {
    if (t != TipoTerreno::FERRO &&
        t != TipoTerreno::SILICIO &&

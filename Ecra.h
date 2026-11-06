@@ -11,12 +11,12 @@ class Ecra {
 public:
    Ecra(int linhas = Settings::ecra_max_linhas, int colunas = Settings::ecra_max_colunas);
 
-   int getLinhas() const {return nLinhas;};
-   int getColunas() const {return nColunas;};
+   int getLinhas() const { return nLinhas; }
+   int getColunas() const { return nColunas; }
 
-   void limpa(); // por todas as posicoes com espaco, cursor em (0,0)
-   void posiciona(int l, int c);       // move o cursor
-   void escreve(char ch); // escreve na posicao cursor
+   void limpa(); // poe todas as posicoes com espaco, cursor em (0,0)
+   void posiciona(int l, int c);       // move o cursor para (l,c)
+   void escreve(char ch); // escreve na posicao cursor (assumimos que ja esta validada)
    void escreve(const std::string &texto); // escreve na posicao cursor
    void escreve(int i);
    void escreve(int l, int c, const std::string &texto); // primeiro posiciona, depois escreve

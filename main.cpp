@@ -77,30 +77,22 @@ int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
     demoEcra();
-    aguardaEnter();
 
     demoCoordenada();
-    aguardaEnter();
 
     demoFabrica(10, 10);
-    aguardaEnter();
 
     demoFabrica(4, 4);
-    aguardaEnter();
 
     demoFabrica(26, 26);
-    aguardaEnter();
 
     demoLposicao();
-    aguardaEnter();
 
     demoCarrega("./mapas/mapa1.txt");
-    aguardaEnter();
 
     demoCarrega("./mapas/mapa_erro_char.txt");
     demoCarrega("./mapas/mapa_erro_tam.txt");
     demoCarrega("./mapas/naoexiste.txt");
-    aguardaEnter();
 
     Fabrica *atual = Fabrica::carrega("./mapas/mapa1.txt");
     if (atual == nullptr) {

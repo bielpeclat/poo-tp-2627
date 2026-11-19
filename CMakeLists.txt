@@ -18,6 +18,8 @@ add_executable(poo_tp_2627
         Coordenada.h
         Fabrica.cpp
         Fabrica.h
+        Comando.cpp
+        Comando.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

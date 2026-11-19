@@ -22,6 +22,10 @@ add_executable(poo_tp_2627
         Comando.h
         Simulador.cpp
         Simulador.h
+        CmdFim.cpp
+        CmdFim.h
+        RegistoComandos.cpp
+        RegistoComandos.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

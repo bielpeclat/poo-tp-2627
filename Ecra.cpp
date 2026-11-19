@@ -47,7 +47,6 @@ void Ecra::posiciona(int l, int c) {
       cursorL = l;
       cursorC = c;
    }
-
 }
 
 void Ecra::escreve(char ch) {

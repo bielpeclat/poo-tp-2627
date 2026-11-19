@@ -20,6 +20,8 @@ add_executable(poo_tp_2627
         Fabrica.h
         Comando.cpp
         Comando.h
+        Simulador.cpp
+        Simulador.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

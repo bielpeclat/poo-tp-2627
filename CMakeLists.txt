@@ -58,6 +58,21 @@ add_executable(poo_tp_2627
         CmdVende.h
         CmdCompra.cpp
         CmdCompra.h
+        Item.h
+        MinerioFerro.cpp
+        MinerioFerro.h
+        SilicioBruto.cpp
+        SilicioBruto.h
+        Gelo.cpp
+        Gelo.h
+        PlacaFerro.cpp
+        PlacaFerro.h
+        SilicioPuro.cpp
+        SilicioPuro.h
+        Agua.cpp
+        Agua.h
+        KitHabitat.cpp
+        KitHabitat.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

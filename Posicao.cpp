@@ -4,7 +4,7 @@
 
 #include "Posicao.h"
 
-Posicao::Posicao() : terreno(TipoTerreno::SOLO), quantidade(0) {}
+Posicao::Posicao() : terreno(TipoTerreno::SOLO), quantidade(0), maquina(nullptr) {}
 
 bool Posicao::transformaEmDeposito(TipoTerreno t, int q) {
    if (t != TipoTerreno::FERRO &&

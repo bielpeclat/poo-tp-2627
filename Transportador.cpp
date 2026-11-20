@@ -51,15 +51,20 @@ bool Transportador::recebe(Item* novo, int instante) {
 
 void Transportador::atua(Fabrica& fabrica) {
    if (item == nullptr) {
-      return; // nada a entregar
+      return;                                    // nada a entregar
    }
    if (instanteRececao >= fabrica.getInstante()) {
-      return;
+      return;                                    // chegou neste instante: só sai no próximo
    }
 
    Maquina* vizinha = fabrica.getMaquinaVizinha(getPosicao(), getDirecao());
    if (vizinha != nullptr && vizinha->aceita(item)
        && vizinha->recebe(item, fabrica.getInstante())) {
-      item = nullptr; // ja não é meu: largo o ponteiro. Sem delete.
-   }
+      item = nullptr; // já não é do transportador: larga o ponteiro. Sem delete.
+      return;
+       }
+
+   // se chegou aqui, não conseguiu entregar: fica com o item e tenta no próximo instante
+   fabrica.registaEvento("transportador " + getPosicao().toString() + " bloqueado");
 }
+

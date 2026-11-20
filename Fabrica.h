@@ -2,6 +2,7 @@
 #define POO_TP_2627_FABRICA_H
 
 #include <string>
+#include <vector>
 #include "Ecra.h"
 #include "Posicao.h"
 #include "Settings.h"
@@ -22,12 +23,23 @@ class Fabrica {
 
    int quantidadeAleatoria() const;
 
+    std::vector<std::string> eventos;   // resumo do ultimo instante (para o painel)
+
+    // Funções de apoio
+    bool dentro(int l, int c) const; // (l,c) esta dentro da fabrica?
+    int contaMaquinas() const;
+    static Maquina* criaMaquina(char tipo, const Coordenada& pos, Direcao dir);
+
    Fabrica(int l, int c, bool aleatoria);
 
 
 public:
     Fabrica(int l, int c); // O nosso construtor pedido no Enunciado
     // esse construtor tem posicoes aleatorias (delegacao para outro construtor)
+
+    ~Fabrica(); // Para apagar todas as máquinas
+    Fabrica(const Fabrica&) = delete;
+    Fabrica& operator=(const Fabrica&) = delete;
 
     static Fabrica* carrega(const std::string& nomeFicheiro);
     void preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const;
@@ -48,6 +60,7 @@ public:
     void avancaInstante();        // Instante: maquinas atuam e guarda-se o resumo
     std::string estado() const;   // texto do comando estado
 
+    void registaEvento(const std::string& texto); // Cada máquina anuncia o que aconteceu
     Maquina* getMaquinaVizinha(const Coordenada& pos, Direcao dir) const; // Transportador precisa
     // de perguntar à fábrica que máquina está ao seu lado, na sua direção.
 

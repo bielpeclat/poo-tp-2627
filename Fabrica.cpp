@@ -1,10 +1,16 @@
 #include <string>
 #include <fstream>
+#include <algorithm>   // std::max
 
 #include "Fabrica.h"
 #include "Ecra.h"
 #include "Settings.h"
 #include "Coordenada.h"
+#include "Perfuradora.h"
+#include "Transportador.h"
+#include "Refinaria.h"
+#include "Oficina.h"
+#include "Lancador.h"
 
 Fabrica::Fabrica(int l, int c, bool aleatoria) { // bool aleatoria necessária para caso a fabrica seja criada apartir de um mapa
 
@@ -18,6 +24,14 @@ Fabrica::Fabrica(int l, int c, bool aleatoria) { // bool aleatoria necessária p
 }
 
 Fabrica::Fabrica(int l, int c) : Fabrica(l, c, true) {} // delegação
+
+Fabrica::~Fabrica() {
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            delete grelha[l][c].retiraMaquina();
+        }
+    }
+}
 
 void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
 
@@ -40,14 +54,14 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
     for (int l = 0; l < tam_Linhas_f; l++) {
         for (int c = 0; c < tam_Colunas_f; c++) {
 
-            char simbolo = grelha[l][c].getCaracter();
+            char simbolo = grelha[l][c].getCaracter(); // Terreno
+            Maquina* m = grelha[l][c].getMaquina();
+            if (m != nullptr) {
+                simbolo = m->getCaracter(); // Máquina tapa o terreno
+            }
             ecra.escreve(lInicial + 2 + l, cInicial + 2 + c, simbolo);
         }
     }
-    /*int altPainel = altFabrica;
-        if (altPainel < 10) {
-            altPainel = 10;
-      }*/
 
     int altPainel = std::max(altFabrica, 10); // mais legivel e faz o mesmo
 
@@ -117,6 +131,16 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
             resultado += atual.toString();
             resultado += ": ";
             resultado += grelha[l][c].getDescricao();
+
+            Maquina* m = grelha[l][c].getMaquina();
+            if (m != nullptr) {
+                resultado += " | ";
+                resultado += m->getNome();
+                resultado += " (dir ";
+                resultado += m->getLetraDirecao();
+                resultado += "): ";
+                resultado += m->getDescricao();
+            }
             resultado += "\n";
         }
     }
@@ -138,12 +162,25 @@ void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) 
     ecra.escreve(creditos);
 
     ecra.escreve(l + 2, c, "Maquinas: ");
-    ecra.escreve(0); // ainda nao temos maquinas para o checkpoint1
+    ecra.escreve(contaMaquinas());
 
     ecra.escreve(l + 3, c, "Engenheiros: ");
     ecra.escreve(0); // ainda nao temos engenheiros para o checkpoint1
 
     ecra.escreve(l + 5, c, "No ultimo instante: ");
+    // Eventos do último instante
+    int linhaFim = lInicial + altura - 1; // linha da moldura de baixo
+    int cabem = linhaFim - (l + 6); // linhas livres para eventos
+    int larguraTexto = largura - 4;
+    int n = static_cast<int>(eventos.size());
+
+    for (int i = 0; i < n && i < cabem; i++) {
+        std::string texto = eventos[i];
+        if (i == cabem - 1 && n > cabem) {
+            texto = "... mais " + std::to_string(n - cabem + 1);   // nao cabem todos
+        }
+        ecra.escreve(l + 6 + i, c, texto.substr(0, larguraTexto));
+    }
 
 }
 
@@ -210,31 +247,158 @@ int Fabrica::quantidadeAleatoria() const {
     return Settings::deposito_quantidade_min + (rand() % amplitude);
 }
 
-//ainda por implementar.
-bool Fabrica::compraMaquina(char /*tipo*/, const Coordenada& /*pos*/, Direcao /*dir*/, std::string& erro) {
-    erro = "compra de maquinas ainda nao implementada";
-    return false;
+
+// Funções para as máquinas
+bool Fabrica::dentro(int l, int c) const {
+    return l >= 0 && l < tam_Linhas_f && c >= 0 && c < tam_Colunas_f;
 }
 
-bool Fabrica::vendeMaquina(const Coordenada& /*pos*/, std::string& erro) {
-    erro = "venda de maquinas ainda nao implementada";
-    return false;
+int Fabrica::contaMaquinas() const {
+    int total = 0;
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            if (grelha[l][c].getMaquina() != nullptr) {
+                total++;
+            }
+        }
+    }
+    return total;
 }
 
-bool Fabrica::rodaMaquina(const Coordenada& /*pos*/, Direcao /*dir*/, std::string& erro) {
-    erro = "rodar maquinas ainda nao implementado";
-    return false;
+// cria a maquina do tipo indicado (p, t, r, o, l); nullptr se o tipo nao existir
+Maquina* Fabrica::criaMaquina(char tipo, const Coordenada& pos, Direcao dir) {
+    switch (tipo) {
+        case 'p': return new Perfuradora(pos, dir);
+        case 't': return new Transportador(pos, dir);
+        case 'r': return new Refinaria(pos, dir);
+        case 'o': return new Oficina(pos, dir);
+        case 'l': return new Lancador(pos, dir);
+        // case 's': return new Silo(pos, dir);   // quando o Gabriel publicar o Silo (G5)
+        default:  return nullptr;
+    }
 }
 
+bool Fabrica::compraMaquina(char tipo, const Coordenada& pos, Direcao dir, std::string& erro) {
+    int l = pos.getLinha();
+    int c = pos.getColuna();
+
+    if (!dentro(l, c)) {
+        erro = "posicao fora da fabrica";
+        return false;
+    }
+    if (grelha[l][c].getTerreno() == TipoTerreno::CRATERA) {
+        erro = "nao se pode colocar uma maquina numa cratera";
+        return false;
+    }
+    if (grelha[l][c].getMaquina() != nullptr) {
+        erro = "a posicao " + pos.toString() + " ja esta ocupada";
+        return false;
+    }
+
+    Maquina* nova = criaMaquina(tipo, pos, dir);
+    if (nova == nullptr) {
+        erro = "tipo de maquina ainda nao disponivel";
+        return false;
+    }
+    if (nova->getCusto() > creditos) {
+        erro = "creditos insuficientes (custa " + std::to_string(nova->getCusto())
+             + ", tem " + std::to_string(creditos) + ")";
+        delete nova;                       // nao foi comprada: nao pode ficar perdida na memoria
+        return false;
+    }
+
+    creditos -= nova->getCusto();
+    grelha[l][c].colocaMaquina(nova);      // a partir daqui a Fabrica e dona da maquina
+    return true;
+}
+
+bool Fabrica::vendeMaquina(const Coordenada& pos, std::string& erro) {
+    int l = pos.getLinha();
+    int c = pos.getColuna();
+
+    if (!dentro(l, c) || grelha[l][c].getMaquina() == nullptr) {
+        erro = "nao existe nenhuma maquina em " + pos.toString();
+        return false;
+    }
+
+    Maquina* m = grelha[l][c].retiraMaquina();
+    creditos += m->getValorVenda();        // recebe 50% do custo
+    delete m;                              // os itens que tinha dentro perdem-se (destrutor da maquina)
+    return true;
+}
+
+bool Fabrica::rodaMaquina(const Coordenada& pos, Direcao dir, std::string& erro) {
+    int l = pos.getLinha();
+    int c = pos.getColuna();
+
+    if (!dentro(l, c) || grelha[l][c].getMaquina() == nullptr) {
+        erro = "nao existe nenhuma maquina em " + pos.toString();
+        return false;
+    }
+
+    grelha[l][c].getMaquina()->setDirecao(dir);
+    return true;
+}
+
+Maquina* Fabrica::getMaquinaVizinha(const Coordenada& pos, Direcao dir) const {
+    int l = pos.getLinha();
+    int c = pos.getColuna();
+
+    switch (dir) {
+        case Direcao::CIMA:     l--; break;
+        case Direcao::BAIXO:    l++; break;
+        case Direcao::ESQUERDA: c--; break;
+        case Direcao::DIREITA:  c++; break;
+    }
+
+    if (!dentro(l, c)) {
+        return nullptr;                    // a vizinha estaria fora da fabrica
+    }
+    return grelha[l][c].getMaquina();
+}
+
+void Fabrica::registaEvento(const std::string& texto) {
+    eventos.push_back(texto);
+}
+
+// Um instante: o tempo avanca e cada maquina atua uma vez.
+// A regra "um item anda no maximo 1 posicao por instante" e garantida pelas maquinas:
+// cada uma guarda o instante em que recebeu o item e so o entrega num instante posterior.
 void Fabrica::avancaInstante() {
-    instante++;   // por agora so avanca o tempo;
+    instante++;
+    eventos.clear();                       // o resumo e so do instante atual
+
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            Maquina* m = grelha[l][c].getMaquina();
+            if (m != nullptr) {
+                m->atua(*this);
+            }
+        }
+    }
+
+    if (eventos.empty()) {
+        eventos.push_back("nada a assinalar");
+    }
 }
 
 std::string Fabrica::estado() const {
-    return "";
-}
+    std::string texto;
+    texto += "Instante: " + std::to_string(instante) + "\n";
+    texto += "Creditos: " + std::to_string(creditos) + "\n";
 
-// Também ainda não implementado - Posição ainda não guarda maquinas
-Maquina* Fabrica::getMaquinaVizinha(const Coordenada& /*pos*/, Direcao /*dir*/) const {
-    return nullptr;
+    texto += "Maquinas (" + std::to_string(contaMaquinas()) + "):\n";
+    for (int l = 0; l < tam_Linhas_f; l++) {
+        for (int c = 0; c < tam_Colunas_f; c++) {
+            Maquina* m = grelha[l][c].getMaquina();
+            if (m != nullptr) {
+                texto += "  " + m->getPosicao().toString() + " " + m->getNome()
+                       + " (dir " + m->getLetraDirecao() + "): " + m->getDescricao() + "\n";
+            }
+        }
+    }
+
+    texto += "Engenheiros: nenhum\n";                      // entrega final
+    texto += "Itens enviados para a Terra: nenhum\n";      // entrega final (lancador)
+    return texto;
 }

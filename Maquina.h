@@ -23,6 +23,7 @@ public:
     const Coordenada& getPosicao() const { return pos; }
     Direcao getDirecao() const { return dir; }
     void setDirecao(Direcao d) { dir = d; }   // -- Comando roda.
+    char getLetraDirecao() const;             // c, b, e ou d (para o lposicao e o estado)
     int getValorVenda() const;                // -- Quantos créditos a fábrica recebe ao vender
                                               // esta máquina - settings.
 

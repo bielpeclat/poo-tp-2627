@@ -3,12 +3,14 @@
 
 #include <string>
 
+class Maquina;
 enum class TipoTerreno {SOLO, CRATERA, FERRO, SILICIO, GELO};
 
 class Posicao {
 private:
    TipoTerreno terreno;
    int quantidade;
+   Maquina* maquina;
 public:
    Posicao(); // esta vazia porque o construtor poem solo/ n = 0
 
@@ -21,6 +23,11 @@ public:
    bool removeUnidade(); // tira 1 do deposito da posicao atual
    char getCaracter() const; // (solo/ cratera/ deposito)
    std::string getDescricao() const; // (tipo + quantidade)
+
+   //Máquina colocada nesta posição
+   Maquina* getMaquina() const { return maquina; }
+   void colocaMaquina(Maquina* m) { maquina = m; }
+   Maquina* retiraMaquina() { Maquina* m = maquina; maquina = nullptr; return m; } // devolve-a para a Fabrica depois apagar
 
 };
 

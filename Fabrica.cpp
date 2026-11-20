@@ -209,3 +209,27 @@ int Fabrica::quantidadeAleatoria() const {
     int amplitude = Settings::deposito_quantidade_max - Settings::deposito_quantidade_min + 1;
     return Settings::deposito_quantidade_min + (rand() % amplitude);
 }
+
+//ainda por implementar.
+bool Fabrica::compraMaquina(char /*tipo*/, const Coordenada& /*pos*/, Direcao /*dir*/, std::string& erro) {
+    erro = "compra de maquinas ainda nao implementada";
+    return false;
+}
+
+bool Fabrica::vendeMaquina(const Coordenada& /*pos*/, std::string& erro) {
+    erro = "venda de maquinas ainda nao implementada";
+    return false;
+}
+
+bool Fabrica::rodaMaquina(const Coordenada& /*pos*/, Direcao /*dir*/, std::string& erro) {
+    erro = "rodar maquinas ainda nao implementado";
+    return false;
+}
+
+void Fabrica::avancaInstante() {
+    instante++;   // por agora so avanca o tempo;
+}
+
+std::string Fabrica::estado() const {
+    return "";
+}

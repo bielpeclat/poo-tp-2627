@@ -73,6 +73,8 @@ add_executable(poo_tp_2627
         Agua.h
         KitHabitat.cpp
         KitHabitat.h
+        Maquina.cpp
+        Maquina.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

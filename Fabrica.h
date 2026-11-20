@@ -5,6 +5,7 @@
 #include "Ecra.h"
 #include "Posicao.h"
 #include "Settings.h"
+#include "Maquina.h"
 
 
 class Fabrica {
@@ -39,6 +40,13 @@ public:
    const Posicao& getPosicao(int l, int c) const {return grelha[l][c];}
 
    std::string listaPosicao(const std::string& lc, int raio = 0) const;
+
+    bool compraMaquina(char tipo, const Coordenada& pos, Direcao dir, std::string& erro);
+    bool vendeMaquina(const Coordenada& pos, std::string& erro);
+    bool rodaMaquina(const Coordenada& pos, Direcao dir, std::string& erro);
+
+    void avancaInstante();        // Instante: maquinas atuam e guarda-se o resumo
+    std::string estado() const;   // texto do comando estado
 
 };
 

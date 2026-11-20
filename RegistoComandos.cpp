@@ -8,6 +8,7 @@
 #include "CmdExecuta.h"
 #include "CmdLPosicao.h"
 #include "CmdFabrica.h"
+#include "CmdCarrega.h"
 
 std::vector<Comando*> criaTodosComandos() {
    std::vector<Comando*> local;
@@ -16,5 +17,6 @@ std::vector<Comando*> criaTodosComandos() {
    local.push_back(new CmdExecuta());
    local.push_back(new CmdLPosicao());
    local.push_back(new CmdFabrica());
+   local.push_back(new CmdCarrega());
    return local;
 }

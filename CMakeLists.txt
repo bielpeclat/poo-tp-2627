@@ -36,6 +36,18 @@ add_executable(poo_tp_2627
         CmdFabrica.h
         CmdCarrega.cpp
         CmdCarrega.h
+        CmdRecupera.cpp
+        CmdRecupera.h
+        CmdGrava.cpp
+        CmdGrava.h
+        CmdDespede.cpp
+        CmdDespede.h
+        CmdAtribui.cpp
+        CmdAtribui.h
+        CmdContrata.cpp
+        CmdContrata.h
+        CmdMelhora.cpp
+        CmdMelhora.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

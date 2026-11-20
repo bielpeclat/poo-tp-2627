@@ -28,6 +28,8 @@ add_executable(poo_tp_2627
         RegistoComandos.h
         CmdAjuda.cpp
         CmdAjuda.h
+        CmdExecuta.cpp
+        CmdExecuta.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

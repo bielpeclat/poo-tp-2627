@@ -1,0 +1,12 @@
+carrega mapas/mapa_erro_char.txt
+carrega mapas/mapa_erro_tam.txt
+carrega mapas/naoexiste.txt
+lposicao aa
+carrega mapas/mapa1.txt
+fabrica 5 5
+carrega mapas/mapa1.txt
+lposicao ac
+lposicao bh 1
+lposicao ff
+lposicao gg
+lposicao aa 2

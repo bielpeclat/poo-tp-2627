@@ -1,0 +1,3 @@
+fabrica 5 5
+executa extras/testes/teste_ajuda_fim.txt
+lposicao aa

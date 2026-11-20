@@ -1,0 +1,44 @@
+ajuda
+comandoinexistente
+compra t aa d
+vende aa
+avanca
+estado
+lposicao aa
+fabrica
+fabrica 10
+fabrica abc 10
+fabrica 0 10
+fabrica 10 27
+fabrica 10 10 10
+ajuda 1 2
+fim 1
+fabrica 10 10
+compra x aa d
+compra t a d
+compra t aa x
+compra t aa
+compra t aa d d
+vende a
+vende 11
+roda aa
+roda aa x
+avanca 0
+avanca -1
+avanca abc
+avanca 1 2
+estado 1
+lposicao
+lposicao aa -1
+lposicao aa x
+lposicao aa 1 2
+lposicao 11
+melhora
+melhora a
+contrata
+atribui x aa
+atribui 1
+despede abc
+despede
+grava
+recupera

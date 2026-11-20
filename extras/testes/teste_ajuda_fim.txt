@@ -1,0 +1,20 @@
+ajuda
+ajuda fim
+ajuda ajuda
+ajuda executa
+ajuda lposicao
+ajuda fabrica
+ajuda carrega
+ajuda melhora
+ajuda contrata
+ajuda atribui
+ajuda despede
+ajuda grava
+ajuda recupera
+ajuda compra
+ajuda vende
+ajuda roda
+ajuda avanca
+ajuda estado
+ajuda naoexiste
+fim

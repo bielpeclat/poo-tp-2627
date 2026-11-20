@@ -48,6 +48,9 @@ public:
     void avancaInstante();        // Instante: maquinas atuam e guarda-se o resumo
     std::string estado() const;   // texto do comando estado
 
+    Maquina* getMaquinaVizinha(const Coordenada& pos, Direcao dir) const; // Transportador precisa
+    // de perguntar à fábrica que máquina está ao seu lado, na sua direção.
+
 };
 
 #endif //POO_TP_2627_FABRICA_H

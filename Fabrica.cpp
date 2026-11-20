@@ -233,3 +233,8 @@ void Fabrica::avancaInstante() {
 std::string Fabrica::estado() const {
     return "";
 }
+
+// Também ainda não implementado - Posição ainda não guarda maquinas
+Maquina* Fabrica::getMaquinaVizinha(const Coordenada& /*pos*/, Direcao /*dir*/) const {
+    return nullptr;
+}

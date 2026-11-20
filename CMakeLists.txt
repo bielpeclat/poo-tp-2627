@@ -75,6 +75,16 @@ add_executable(poo_tp_2627
         KitHabitat.h
         Maquina.cpp
         Maquina.h
+        Perfuradora.cpp
+        Perfuradora.h
+        Refinaria.cpp
+        Refinaria.h
+        Oficina.cpp
+        Oficina.h
+        Lancador.cpp
+        Lancador.h
+        Transportador.cpp
+        Transportador.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

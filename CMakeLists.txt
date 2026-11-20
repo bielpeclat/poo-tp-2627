@@ -48,6 +48,16 @@ add_executable(poo_tp_2627
         CmdContrata.h
         CmdMelhora.cpp
         CmdMelhora.h
+        CmdEstado.cpp
+        CmdEstado.h
+        CmdAvanca.cpp
+        CmdAvanca.h
+        CmdRoda.cpp
+        CmdRoda.h
+        CmdVende.cpp
+        CmdVende.h
+        CmdCompra.cpp
+        CmdCompra.h
 )
 
 # copia a pasta mapas para junto do executavel em cada compilacao

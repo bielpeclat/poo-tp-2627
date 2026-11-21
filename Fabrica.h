@@ -23,6 +23,9 @@ class Fabrica {
 
    int quantidadeAleatoria() const;
 
+    inline static const int larguraPainel = 30;
+    inline static const int alturaMinimaPainel = 10;
+
     std::vector<std::string> eventos;   // resumo do ultimo instante (para o painel)
 
     // Funções de apoio
@@ -43,6 +46,8 @@ public:
 
     static Fabrica* carrega(const std::string& nomeFicheiro);
     void preparaEcra(Ecra &ecra, int lInicial = 0, int cInicial = 0) const;
+    int getAlturaEcra() const;
+    int getLarguraEcra() const;
 
    int getLinhas() const {return tam_Linhas_f;}
    int getColunas() const {return tam_Colunas_f;}

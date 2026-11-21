@@ -64,7 +64,7 @@ void Fabrica::preparaEcra(Ecra &ecra, int lInicial, int cInicial) const {
         }
     }
 
-    int altPainel = std::max(altFabrica, 10); // mais legivel e faz o mesmo
+    int altPainel = std::max(altFabrica, alturaMinimaPainel);
 
     desenhaPainel(ecra, lInicial, cInicial + largFabrica + 1, altPainel);
 }
@@ -150,7 +150,7 @@ std::string Fabrica::listaPosicao(const std::string& lc, int raio) const {
 
 void Fabrica::desenhaPainel(Ecra &ecra, int lInicial, int cInicial, int altura) const {
 
-    int largura = 30; // procurar a constante no settings
+    int largura = larguraPainel;
     ecra.moldura(lInicial, cInicial, altura, largura);
 
     int l = lInicial + 1;
@@ -248,6 +248,13 @@ int Fabrica::quantidadeAleatoria() const {
     return Settings::deposito_quantidade_min + (rand() % amplitude);
 }
 
+int Fabrica::getAlturaEcra() const {
+    return std::max(tam_Linhas_f + 3, alturaMinimaPainel);
+}
+
+int Fabrica::getLarguraEcra() const {
+    return (tam_Colunas_f + 3) + 1 + larguraPainel;
+}
 
 // Funções para as máquinas
 bool Fabrica::dentro(int l, int c) const {
@@ -284,25 +291,25 @@ bool Fabrica::compraMaquina(char tipo, const Coordenada& pos, Direcao dir, std::
     int c = pos.getColuna();
 
     if (!dentro(l, c)) {
-        erro = "posicao fora da fabrica";
+        erro = "Posicao fora da fabrica.";
         return false;
     }
     if (grelha[l][c].getTerreno() == TipoTerreno::CRATERA) {
-        erro = "nao se pode colocar uma maquina numa cratera";
+        erro = "Nao se pode colocar uma maquina numa cratera.";
         return false;
     }
     if (grelha[l][c].getMaquina() != nullptr) {
-        erro = "a posicao " + pos.toString() + " ja esta ocupada";
+        erro = "A posição " + pos.toString() + " ja esta ocupada.";
         return false;
     }
 
     Maquina* nova = criaMaquina(tipo, pos, dir);
     if (nova == nullptr) {
-        erro = "tipo de maquina ainda nao disponivel";
+        erro = "Tipo de maquina ainda nao disponivel.";
         return false;
     }
     if (nova->getCusto() > creditos) {
-        erro = "creditos insuficientes (custa " + std::to_string(nova->getCusto())
+        erro = "Creditos insuficientes (custa " + std::to_string(nova->getCusto())
              + ", tem " + std::to_string(creditos) + ")";
         delete nova;                       // nao foi comprada: nao pode ficar perdida na memoria
         return false;
@@ -318,7 +325,7 @@ bool Fabrica::vendeMaquina(const Coordenada& pos, std::string& erro) {
     int c = pos.getColuna();
 
     if (!dentro(l, c) || grelha[l][c].getMaquina() == nullptr) {
-        erro = "nao existe nenhuma maquina em " + pos.toString();
+        erro = "Nao existe nenhuma maquina em " + pos.toString();
         return false;
     }
 
@@ -333,7 +340,7 @@ bool Fabrica::rodaMaquina(const Coordenada& pos, Direcao dir, std::string& erro)
     int c = pos.getColuna();
 
     if (!dentro(l, c) || grelha[l][c].getMaquina() == nullptr) {
-        erro = "nao existe nenhuma maquina em " + pos.toString();
+        erro = "Nao existe nenhuma maquina em " + pos.toString();
         return false;
     }
 
@@ -379,7 +386,7 @@ void Fabrica::avancaInstante() {
     }
 
     if (eventos.empty()) {
-        eventos.push_back("nada a assinalar");
+        eventos.push_back("Nada a assinalar.");
     }
 }
 
@@ -399,7 +406,7 @@ std::string Fabrica::estado() const {
         }
     }
 
-    texto += "Engenheiros: nenhum\n";                      // entrega final
-    texto += "Itens enviados para a Terra: nenhum\n";      // entrega final (lancador)
+    texto += "Engenheiros: Nenhum\n";                      // entrega final
+    texto += "Itens enviados para a Terra: Nenhum\n";      // entrega final (lancador)
     return texto;
 }

@@ -121,7 +121,7 @@ void Simulador::defineFabrica(Fabrica* nova) {
 
 void Simulador::mostraEcra() const { // self-explanatory
    if (fabrica == nullptr) return;
-   Ecra ecra;
+   Ecra ecra(fabrica->getAlturaEcra(), fabrica->getLarguraEcra());   // Apenas o tamanho necessário.
    fabrica->preparaEcra(ecra);
    ecra.mostra();
 }

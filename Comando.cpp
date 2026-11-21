@@ -31,6 +31,13 @@ bool Comando::eDirecao(const std::string& s) {
     return s == "c" || s == "b" || s == "e" || s == "d";
 }
 
+Direcao Comando::paraDirecao(const std::string& s) {
+    if (s == "c") return Direcao::CIMA;
+    if (s == "b") return Direcao::BAIXO;
+    if (s == "e") return Direcao::ESQUERDA;
+    return Direcao::DIREITA;   // "d" (a validacao com eDirecao ja garantiu que e uma das 4)
+}
+
 bool Comando::eTipoMaquina(const std::string& s) {
     return s == "p" || s == "t" || s == "r" || s == "o" || s == "s" || s == "l";
 }

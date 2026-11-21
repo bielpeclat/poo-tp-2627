@@ -11,6 +11,7 @@
 #include "Refinaria.h"
 #include "Oficina.h"
 #include "Lancador.h"
+#include "Silo.h"
 
 Fabrica::Fabrica(int l, int c, bool aleatoria) { // bool aleatoria necessária para caso a fabrica seja criada apartir de um mapa
 
@@ -265,7 +266,7 @@ int Fabrica::contaMaquinas() const {
     return total;
 }
 
-// cria a maquina do tipo indicado (p, t, r, o, l); nullptr se o tipo nao existir
+// cria a maquina do tipo indicado (p, t, r, o, s, l); nullptr se o tipo nao existir
 Maquina* Fabrica::criaMaquina(char tipo, const Coordenada& pos, Direcao dir) {
     switch (tipo) {
         case 'p': return new Perfuradora(pos, dir);
@@ -273,7 +274,7 @@ Maquina* Fabrica::criaMaquina(char tipo, const Coordenada& pos, Direcao dir) {
         case 'r': return new Refinaria(pos, dir);
         case 'o': return new Oficina(pos, dir);
         case 'l': return new Lancador(pos, dir);
-        // case 's': return new Silo(pos, dir);   // quando o Gabriel publicar o Silo (G5)
+        case 's': return new Silo(pos, dir);
         default:  return nullptr;
     }
 }

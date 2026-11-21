@@ -1,0 +1,14 @@
+carrega mapas/mapa1.txt
+compra s ca d
+compra t cb d
+compra t cc d
+lposicao ca 2
+avanca 5
+estado
+roda ca b
+vende ca
+estado
+vende cb
+vende cc
+estado
+fim

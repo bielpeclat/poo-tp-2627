@@ -1,0 +1,17 @@
+carrega mapas/mapa1.txt
+compra p bh d
+compra t ba c
+compra t ba b
+compra t ga d
+compra t zz d
+compra o da d
+compra o db d
+compra o dc d
+compra o dd d
+compra o de d
+compra o df d
+estado
+vende da
+compra o df d
+estado
+fim

@@ -24,5 +24,24 @@ Cada linha e um comando, sem comentarios. Resultados esperados:
 ## teste_executa_aninhado.txt
 - `fabrica 5 5` cria a fabrica; o `executa` da linha 2 e recusado (nao se pode usar `executa` dentro de um ficheiro executado); `lposicao aa` na linha 3 continua a funcionar.
 
+## teste_maquinas.txt
+- Carrega `mapas/mapa1.txt` e compra uma perfuradora (`ac`), dois transportadores (`bc`, `bd`) e um lancador (`be`), cada uma com o seu caracter no ecra (`P`, seta, `L`).
+- `avanca` mostra 1 ecra (instante 1). `roda bc b` muda a seta do transportador de `>` para `v`.
+- `estado` e `lposicao bc 1` mostram as maquinas. `vende bd` devolve 50% do custo (5 -> 2, os creditos sobem 2). Segundo `vende bd`, `roda bd c` e `vende ff` falham (nao ha maquina).
+
+## teste_compra_erros.txt
+- `compra p bh d`: cratera. `compra t ba b` (apos comprar em `ba`): posicao ocupada. `compra t ga d` e `compra t zz d`: fora da fabrica (6x10).
+- 4 oficinas (800 creditos) deixam 195 creditos: a 5.a e a 6.a oficina falham por creditos insuficientes.
+- `vende da` devolve 100 creditos e a compra seguinte (`df`) ja funciona (95 creditos no fim).
+
+## teste_silo.txt
+- Compra um silo (`ca`) e dois transportadores (`cb`, `cc`); `lposicao ca 2` mostra o silo vazio; `avanca 5` mostra 5 ecras (silo e transportadores vazios, nada a assinalar).
+- `vende ca` devolve 60 creditos (50% de 120) e `vende cb` e `vende cc` devolvem 2 cada.
+- Os itens do silo (perda, ordem do mais antigo, sem limite) testam-se em `teste_silo.cpp` (ver abaixo).
+
+## teste_silo.cpp + corre_teste_silo.sh (teste interno, fora do projeto e do zip)
+- Como no CP2 nenhuma maquina produz itens, este programa insere itens a mao no silo.
+- `bash extras/testes/corre_teste_silo.sh` (a partir da pasta do projeto) compila com AddressSanitizer e corre com a perda a 0% (nunca perde, o mais antigo sai primeiro) e a 100% (perde um por instante). Sem fugas de memoria e sem warnings. O `Settings.h` original nao e alterado (usa uma copia).
+
 ## teste_ajuda_fim.txt
 - `ajuda` lista os 17 comandos; `ajuda <comando>` mostra a ajuda detalhada de cada um; `ajuda naoexiste` da erro; `fim` termina o programa (correr este ficheiro no fim).

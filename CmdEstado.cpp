@@ -1,5 +1,7 @@
 #include "CmdEstado.h"
 
+#include "Simulador.h"
+#include "Fabrica.h"
 #include <iostream>
 
 CmdEstado::CmdEstado() : Comando("estado", "estado") {}
@@ -19,7 +21,6 @@ bool CmdEstado::valida(const std::vector<std::string>& args, std::string& erro) 
    return true;
 }
 
-// provisorio: sera ligado a Fabrica quando o contrato do Filipe estiver publicado
-void CmdEstado::executa(Simulador&, const std::vector<std::string>&) {
-   std::cout << "estado: ainda nao ligado a fabrica\n";
+void CmdEstado::executa(Simulador& sim, const std::vector<std::string>&) {
+   std::cout << sim.getFabrica().estado();
 }

@@ -1,5 +1,8 @@
 #include "CmdRoda.h"
 
+#include "Simulador.h"
+#include "Fabrica.h"
+#include "Coordenada.h"
 #include <iostream>
 
 CmdRoda::CmdRoda() : Comando("roda", "roda <lc> <dir>") {}
@@ -29,7 +32,19 @@ bool CmdRoda::valida(const std::vector<std::string>& args, std::string& erro) co
    return true;
 }
 
-// provisorio: sera ligado a Fabrica quando o contrato do Filipe estiver publicado
-void CmdRoda::executa(Simulador&, const std::vector<std::string>&) {
-   std::cout << "roda: ainda nao ligado a fabrica\n";
+void CmdRoda::executa(Simulador& sim, const std::vector<std::string>& args) {
+   Fabrica& fabrica = sim.getFabrica();
+
+   if (!posicaoNaFabrica(fabrica, args[0])) {
+      std::cout << "Posicao fora da fabrica: " << args[0] << "\n";
+      return;
+   }
+
+   std::string erro;
+   if (!fabrica.rodaMaquina(Coordenada(args[0]), paraDirecao(args[1]), erro)) {
+      std::cout << "Erro: " << erro << "\n";
+      return;
+   }
+
+   sim.mostraEcra();
 }

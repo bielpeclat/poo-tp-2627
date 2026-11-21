@@ -1,5 +1,8 @@
 #include "CmdVende.h"
 
+#include "Simulador.h"
+#include "Fabrica.h"
+#include "Coordenada.h"
 #include <iostream>
 
 CmdVende::CmdVende() : Comando("vende", "vende <lc>") {}
@@ -24,7 +27,19 @@ bool CmdVende::valida(const std::vector<std::string>& args, std::string& erro) c
    return true;
 }
 
-// provisorio: sera ligado a Fabrica quando o contrato do Filipe estiver publicado
-void CmdVende::executa(Simulador&, const std::vector<std::string>&) {
-   std::cout << "vende: ainda nao ligado a fabrica\n";
+void CmdVende::executa(Simulador& sim, const std::vector<std::string>& args) {
+   Fabrica& fabrica = sim.getFabrica();
+
+   if (!posicaoNaFabrica(fabrica, args[0])) {
+      std::cout << "Posicao fora da fabrica: " << args[0] << "\n";
+      return;
+   }
+
+   std::string erro;
+   if (!fabrica.vendeMaquina(Coordenada(args[0]), erro)) {
+      std::cout << "Erro: " << erro << "\n";
+      return;
+   }
+
+   sim.mostraEcra();
 }

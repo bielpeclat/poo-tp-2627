@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Maquina.h"   // enum Direcao
 
 class Simulador;
 class Fabrica;
@@ -38,6 +39,7 @@ protected: // Para que apenas a própria classe Comando e as suas derivadas poss
 
     static bool eInteiro(const std::string& s);
     static bool eDirecao(const std::string& s);             // c, b, e, d -  se é uma das 4 direções.
+    static Direcao paraDirecao(const std::string& s);       // "c|b|e|d" -> Direcao (so chamar depois de eDirecao ter dado true)
     static bool eTipoMaquina(const std::string& s);         // p, t, r, o, s, l - se é um tipo de máquina válido
     static bool eFormatoPosicao(const std::string& s);      // se são 2 letras minúsculas dentro do máximo 26x26. (Não precisa da Fábrica - Pode ser usada no valida)
     static bool posicaoNaFabrica(const Fabrica& f, const std::string& lc); // Se a posição cabe dentro da fábrica em questão. (Precisa da Fábrica - Só pode ser usada no executa)

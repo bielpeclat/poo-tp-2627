@@ -1,5 +1,7 @@
 #include "CmdAvanca.h"
 
+#include "Simulador.h"
+#include "Fabrica.h"
 #include <iostream>
 
 CmdAvanca::CmdAvanca() : Comando("avanca", "avanca [n]") {}
@@ -30,7 +32,16 @@ bool CmdAvanca::valida(const std::vector<std::string>& args, std::string& erro) 
    return true;
 }
 
-// provisorio: sera ligado a Fabrica quando o contrato do Filipe estiver publicado
-void CmdAvanca::executa(Simulador&, const std::vector<std::string>&) {
-   std::cout << "avanca: ainda nao ligado a fabrica\n";
+void CmdAvanca::executa(Simulador& sim, const std::vector<std::string>& args) {
+   Fabrica& fabrica = sim.getFabrica();
+
+   int n = 1;                          // sem parametro avanca 1 instante
+   if (args.size() == 1) {
+      n = std::stoi(args[0]);
+   }
+
+   for (int i = 0; i < n; i++) {
+      fabrica.avancaInstante();        // as maquinas atuam uma vez
+      sim.mostraEcra();                // o ecra e mostrado a cada instante
+   }
 }

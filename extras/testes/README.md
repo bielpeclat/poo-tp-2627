@@ -20,6 +20,7 @@ Cada linha e um comando, sem comentarios. Resultados esperados:
 - Linha 8: `ac` e um deposito de ferro. Linha 9: `bh` e uma cratera, com raio 1 mostra 9 posicoes.
 - Linha 10: `ff` e valida (fabrica 6x10). Linha 11: `gg` esta fora da fabrica, erro.
 - Linha 12: `lposicao aa 2` mostra so as posicoes que existem (canto).
+- Linha 13: `lposicao aa 999999999` (raio enorme) responde logo, com as 60 posicoes da fabrica, sem ficar preso num ciclo.
 
 ## teste_executa_aninhado.txt
 - `fabrica 5 5` cria a fabrica; o `executa` da linha 2 e recusado (nao se pode usar `executa` dentro de um ficheiro executado); `lposicao aa` na linha 3 continua a funcionar.

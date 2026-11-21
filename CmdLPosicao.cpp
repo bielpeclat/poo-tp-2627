@@ -2,6 +2,7 @@
 #include "Simulador.h"
 #include "Fabrica.h"
 
+#include <algorithm>   // std::max
 #include <iostream>
 
 CmdLPosicao::CmdLPosicao() : Comando("lposicao", "lposicao <lc> [n]") {}
@@ -42,6 +43,12 @@ void CmdLPosicao::executa(Simulador& sim, const std::vector<std::string>& args) 
    int raio = 0;
    if (args.size() == 2)
       raio = std::stoi(args[1]);
+
+   // Um raio maior que a fabrica mostra o mesmo que um raio do tamanho da fabrica;
+   // sem este limite, um raio enorme (ex: 999999999) faria o ciclo da fabrica demorar uma eternidade.
+   int maximo = std::max(fabrica.getLinhas(), fabrica.getColunas());
+   if (raio > maximo)
+      raio = maximo;
 
    std::cout << fabrica.listaPosicao(args[0], raio);
 }

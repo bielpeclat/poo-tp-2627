@@ -299,7 +299,7 @@ bool Fabrica::compraMaquina(char tipo, const Coordenada& pos, Direcao dir, std::
         return false;
     }
     if (grelha[l][c].getMaquina() != nullptr) {
-        erro = "A posição " + pos.toString() + " ja esta ocupada.";
+        erro = "A posicao " + pos.toString() + " ja esta ocupada.";
         return false;
     }
 
